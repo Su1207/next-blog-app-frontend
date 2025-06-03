@@ -1,14 +1,22 @@
+"use client";
+
 import { getPostById } from "@/lib/api";
 import { Post } from "@/lib/types";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export const dynamic = "force-dynamic"; // SSR
+export default function PostPage() {
+  const params = useParams<{ id: string }>();
+  const [post, setPost] = useState<Post | null>(null);
 
-type PostPageProps = {
-  params: { id: string };
-};
+  useEffect(() => {
+    const fetchPost = async () => {
+      const fetchedPost: Post | null = await getPostById(params.id);
+      setPost(fetchedPost);
+    };
 
-export default async function PostPage({ params }: PostPageProps) {
-  const post: Post | null = await getPostById(params.id);
+    fetchPost();
+  }, [params.id]);
 
   if (!post) {
     return (
@@ -19,7 +27,7 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   return (
-    <div className=" mx-auto py-12 px-6">
+    <div className="mx-auto py-12 px-6">
       <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title}</h1>
       <p className="text-sm text-gray-600 mb-6">
         By <span className="font-medium">{post.authorId.name}</span> on{" "}
