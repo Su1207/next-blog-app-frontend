@@ -15,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useEffect } from "react";
 
 export default function Navbar() {
   const router = useRouter();

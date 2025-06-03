@@ -59,8 +59,8 @@ export const useAuthStore = create<AuthState>()(
           const data = await res.json();
           set({ user: data.user, token: data.token });
           return { success: true };
-        } catch (err: any) {
-          return { success: false, error: err.message || "Login failed" };
+        } catch (err: unknown) {
+          return { success: false, error: err || "Login failed" };
         }
       },
 
@@ -83,8 +83,8 @@ export const useAuthStore = create<AuthState>()(
           const data = await res.json();
           set({ user: data.user, token: data.token });
           return { success: true };
-        } catch (err: any) {
-          return { success: false, error: err.message || "Signup failed" };
+        } catch (err: unknown) {
+          return { success: false, error: err || "Signup failed" };
         }
       },
     }),
