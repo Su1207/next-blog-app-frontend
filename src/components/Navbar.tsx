@@ -33,49 +33,47 @@ export default function Navbar() {
       </Link>
 
       <NavigationMenu>
-        {isLoggedIn && (
-          <NavigationMenuList>
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="px-4 py-2 text-[16px] rounded-md border border-gray-200 hover:bg-gray-100 transition">
-                  <span className="hidden sm:block">{user.name}</span>
-                  <span className="text-lg font-bold sm:hidden">
-                    {user?.name[0]?.charAt(0)}
-                    {user?.name.split(" ")[1]?.charAt(0)}
-                  </span>
-                </DropdownMenuTrigger>
+        <NavigationMenuList>
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="px-4 py-2 text-[16px] rounded-md border border-gray-200 hover:bg-gray-100 transition">
+                <span className="hidden sm:block">{user.name}</span>
+                <span className="text-lg font-bold sm:hidden">
+                  {user?.name[0]?.charAt(0)}
+                  {user?.name.split(" ")[1]?.charAt(0)}
+                </span>
+              </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="w-40">
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard">Dashboard</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={handleLogout}
-                    className="cursor-pointer text-red-600"
-                  >
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className="px-4 py-2 text-lg md:text-[16px]"
-                  >
-                    <Link href="/login">Login</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem className="sm:block hidden">
-                  <NavigationMenuLink asChild className="px-4 py-2 text-[16px]">
-                    <Link href="/signup">Signup</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </>
-            )}
-          </NavigationMenuList>
-        )}
+              <DropdownMenuContent className="w-40">
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="cursor-pointer text-red-600"
+                >
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className="px-4 py-2 text-lg md:text-[16px]"
+                >
+                  <Link href="/login">Login</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem className="sm:block hidden">
+                <NavigationMenuLink asChild className="px-4 py-2 text-[16px]">
+                  <Link href="/signup">Signup</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </>
+          )}
+        </NavigationMenuList>
       </NavigationMenu>
     </nav>
   );
