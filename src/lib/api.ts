@@ -29,21 +29,14 @@ export async function getPostById(id: string): Promise<Post | null> {
 const { token } = useAuthStore.getState();
 
 export async function fetchUserPosts() {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/blogs/getPost`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || "Failed to fetch user posts");
-    }
-    return data.posts;
-  } catch (err) {
-    console.error("Failed to fetch user posts");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getPost`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to fetch user posts");
   }
+  return data.posts;
 }

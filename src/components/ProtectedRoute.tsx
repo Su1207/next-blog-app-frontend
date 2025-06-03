@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/lib/store/authStore";
 
 export default function ProtectedRoute({
   children,
@@ -8,12 +9,13 @@ export default function ProtectedRoute({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const { token, hasHydrated } = useAuthStore();
 
   useEffect(() => {
-    if (!token) router.push("/login");
-  }, [token]);
+    if (hasHydrated && !token) {
+      router.push("/login");
+    }
+  }, [hasHydrated, token, router]);
 
   return <>{token && children}</>;
 }

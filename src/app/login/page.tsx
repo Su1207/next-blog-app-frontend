@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,10 @@ export default function LoginPage() {
     const result = await login(email, password);
 
     if (result.success) {
+      toast("Login successful!", {
+        description: "Welcome back!",
+        duration: 3000,
+      });
       router.push("/");
     } else {
       setError(result.error || "Login failed");
@@ -53,7 +58,7 @@ export default function LoginPage() {
             {loading ? "Logging in..." : "Login"}
           </Button>
           <p className="text-sm text-center mt-2">
-            Doesn't have an account?{" "}
+            Doesn&apos;t have an account?{" "}
             <Link href="/signup" className="text-red-600 hover:underline">
               Signup here
             </Link>

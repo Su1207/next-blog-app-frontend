@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,10 @@ export default function SignupPage() {
     const result = await signup(email, password, name);
 
     if (result.success) {
+      toast("Signup successful!", {
+        description: `Welcome, ${name}.`,
+        duration: 3000,
+      });
       router.push("/dashboard");
     } else {
       setError(result.error || "Signup failed");

@@ -8,6 +8,8 @@ type AuthState = {
   setUser: (user: User | null) => void;
   setToken: (token: string | null) => void;
   logout: () => void;
+  hasHydrated: boolean;
+  setHasHydrated: () => void;
   login: (
     email: string,
     password: string
@@ -31,6 +33,9 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         set({ user: null, token: null });
       },
+
+      hasHydrated: false,
+      setHasHydrated: () => set({ hasHydrated: true }),
 
       login: async (email, password) => {
         try {
@@ -85,6 +90,9 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage", // stored in localStorage
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated();
+      },
     }
   )
 );

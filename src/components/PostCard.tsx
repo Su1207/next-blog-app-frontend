@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PostCard({ post }: { post: Post }) {
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 mb-6 border border-gray-200 hover:shadow-lg  hover:text-white hover:bg-gray-800 hover:scale-105 transition-all duration-300">
+    <div className="bg-white shadow-md rounded-xl p-6 border border-gray-200 hover:shadow-lg  hover:text-white hover:bg-gray-800 hover:scale-105 transition-all duration-300">
       <h2 className="text-2xl font-semibold">{post?.title}</h2>
       <p className="text-sm text-gray-500 mb-2">
         Posted by <span className="font-medium">{post?.authorId.name}</span> on{" "}
