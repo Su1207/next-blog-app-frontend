@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
 import PostCard from "@/components/PostCard";
-import { getAllPosts } from "@/lib/api";
-import { Post } from "@/lib/types";
+import { getAllPosts, getAuthors } from "@/lib/api";
+import { Author, Post } from "@/lib/types";
 
 export const dynamic = "force-dynamic"; // Forces SSR
 
 export default async function HomePage() {
   const posts: Post[] = await getAllPosts();
+  const getAuthor: Author[] = await getAuthors();
   const sortedPosts = posts.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );

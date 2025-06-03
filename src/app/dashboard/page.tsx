@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/lib/store/authStore";
 import { Post } from "@/lib/types";
-import { fetchUserPosts } from "@/lib/api";
+import { createPost, fetchUserPosts } from "@/lib/api";
 import PostCard from "@/components/PostCard";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,25 +26,18 @@ export default function DashboardPage() {
     setLoading(true);
     setError("");
 
+    if (!title || !content) {
+      setError("Title and content are required");
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ title, content }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        setError(err.message || "Failed to create post");
-        return;
-      }
+      const res = await createPost(title, content);
       toast("Post created successfully!", {
         description: "Your blog post has been created.",
         duration: 3000,
       });
+      console.log("Post created:", res);
       setTitle("");
       setContent("");
       setShowForm(false);

@@ -39,3 +39,34 @@ export async function fetchUserPosts() {
   }
   return data.posts;
 }
+
+export async function createPost(title: string, content: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/post`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ title, content }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Failed to create post");
+  }
+
+  return await res.json();
+}
+
+export async function getAuthors() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/authors`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch authors");
+  }
+
+  const data = await res.json();
+  return data.authors;
+}
